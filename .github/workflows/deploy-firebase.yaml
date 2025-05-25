@@ -28,8 +28,8 @@ jobs:
         run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > "${{ github.workspace }}/seenit-coba-49ed84b5f8bc.json"
 
       - name: Deploy to Firebase using Service Account
-        uses: w9jds/firebase-action@v12.9.0
+        uses: w9jds/firebase-action@v13
         with:
         args: deploy --only hosting
         env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/seenit-coba-49ed84b5f8bc.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/seenit-coba-49ed84b5f8bc.json
