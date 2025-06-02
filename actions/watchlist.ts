@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { getMovieDetails } from './movies';
 
 export const addToWatchlist = async (movieId: number) => {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const watchlist = await getWatchlist();
 
     if (!watchlist.includes(movieId)) {
@@ -14,7 +14,7 @@ export const addToWatchlist = async (movieId: number) => {
 };
 
 export const removeFromWatchlist = async (movieId: number) => {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const watchlist = await getWatchlist();
 
     const updatedWatchlist = watchlist.filter((id) => id !== movieId);
@@ -22,7 +22,7 @@ export const removeFromWatchlist = async (movieId: number) => {
 };
 
 export const getWatchlist = async (): Promise<number[]> => {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     const watchlistCookie = cookieStore.get('watchlist');
     return watchlistCookie ? JSON.parse(watchlistCookie.value) : [];
@@ -30,17 +30,5 @@ export const getWatchlist = async (): Promise<number[]> => {
 
 export const getWatchlistProducts = async () => {
     const watchlist = await getWatchlist();
-
-    const movies = await Promise.all(
-        watchlist.map(async (id) => {
-            try {
-                return await getMovieDetails(String(id));
-            } catch (error) {
-                console.error(`⚠️ Gagal fetch movie ID ${id}:`, error);
-                return null; // Jika error, skip
-            }
-        })
-    );
-
-    return movies.filter((movie) => movie !== null);
+    return Promise.all(watchlist.map((id) => getMovieDetails(String(id))));
 };
