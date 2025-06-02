@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   let movies = [];
 
@@ -15,7 +17,7 @@ export default async function HomePage() {
     movies = data.results || [];
   } catch (error) {
     console.error("⚠️ Failed to fetch movies:", error);
-    movies = []; // fallback biar build tetap lanjut
+    movies = [];
   }
 
   return (
