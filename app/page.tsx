@@ -10,13 +10,16 @@ export default async function HomePage() {
     if (!apiKey) throw new Error("❌ Missing TMDB_API_KEY");
 
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`,
-      { cache: 'no-store' }
+      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
+      {
+        cache: 'no-store',
+      }
     );
 
     if (!res.ok) throw new Error("TMDB fetch failed");
 
     const data = await res.json();
+    console.log("📦 TMDB RESPONSE:", data); // Tambahkan ini
     movies = data.results || [];
   } catch (error) {
     console.error("⚠️ Failed to fetch movies:", error);

@@ -11,7 +11,7 @@ export default async function WatchlistPage() {
   } catch (err) {
     console.error("⚠️ Failed to fetch watchlist:", err);
     watchlist = [];
-  }
+  } 
 
   return (
     <div>
