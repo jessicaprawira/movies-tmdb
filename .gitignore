@@ -42,3 +42,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 firebase-service-account.json
+
+*.json
+!firebase.json
+!package-lock.json
