@@ -3,12 +3,15 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   let movies = [];
 
+  const apiKey = process.env.TMDB_API_KEY;
+  console.log("🔍 TMDB_API_KEY:", apiKey);
+
   try {
+    if (!apiKey) throw new Error("❌ Missing TMDB_API_KEY");
+
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
-      {
-        cache: 'no-store',
-      }
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`,
+      { cache: 'no-store' }
     );
 
     if (!res.ok) throw new Error("TMDB fetch failed");
