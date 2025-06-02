@@ -10,7 +10,7 @@ export default async function HomePage() {
     if (!apiKey) throw new Error("❌ Missing TMDB_API_KEY");
 
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
+      `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`,
       {
         cache: 'no-store',
       }
@@ -19,7 +19,7 @@ export default async function HomePage() {
     if (!res.ok) throw new Error("TMDB fetch failed");
 
     const data = await res.json();
-    console.log("📦 TMDB RESPONSE:", data); // Tambahkan ini
+    console.log("📦 TMDB RESPONSE:", data);
     movies = data.results || [];
   } catch (error) {
     console.error("⚠️ Failed to fetch movies:", error);
