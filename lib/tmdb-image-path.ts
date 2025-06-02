@@ -16,10 +16,5 @@ export const generateTmdbImagePath = (
 ) => {
     if (!path) return '/placeholder.svg';
 
-    const baseUrl =
-    width === 'original'
-      ? 'https://image.tmdb.org/t/p/original'
-      : `https://image.tmdb.org/t/p/w${width}`;
-
-    return `${baseUrl}${path}`;
+    return `https://image.tmdb.org/t/p/w${width}${path}`;
 };
