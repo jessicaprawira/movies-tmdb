@@ -35,7 +35,7 @@ jobs:
           IMAGE=${{ secrets.DOCKER_USERNAME }}/movie-list
           TAG=${GITHUB_SHA::7}
 
-          docker build -t $IMAGE:$TAG .
+          docker build -t $IMAGE:$TAG . --build-arg TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
           docker push $IMAGE:$TAG
 
           docker tag $IMAGE:$TAG $IMAGE:latest
