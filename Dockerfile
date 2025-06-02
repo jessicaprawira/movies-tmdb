@@ -10,9 +10,6 @@ RUN npm install
 # Copy app source
 COPY . .
 
-ARG TMDB_API_KEY
-ENV TMDB_API_KEY=$TMDB_API_KEY
-
 # Build Next.js app
 RUN npm run build
 

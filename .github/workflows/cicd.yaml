@@ -62,4 +62,5 @@ jobs:
             --image=$IMAGE \
             --platform=managed \
             --region=$REGION \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars=TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
