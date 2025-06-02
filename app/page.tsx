@@ -4,7 +4,7 @@ export default async function HomePage() {
   let movies = [];
 
   const apiKey = process.env.TMDB_API_KEY;
-  console.log("🔍 TMDB_API_KEY:", apiKey);
+  console.log("🔍 TMDB_API_KEY is Loaded");
 
   try {
     if (!apiKey) throw new Error("❌ Missing TMDB_API_KEY");

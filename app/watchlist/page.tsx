@@ -21,7 +21,17 @@ export default async function WatchlistPage() {
       ) : (
         <ul>
           {watchlist.map((movie: any) => (
-            <li key={movie.id}>{movie.title}</li>
+            <li key={movie.id}>
+              <img src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : 'https://via.placeholder.com/150x225?text=No+Image'
+                }
+                alt={movie.title}
+                width={150}
+              />
+              <p>{movie.title}</p>
+            </li>
           ))}
         </ul>
       )}
