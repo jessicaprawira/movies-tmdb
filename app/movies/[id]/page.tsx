@@ -1,17 +1,21 @@
-// app/page.tsx
 export default async function HomePage() {
   let movies = [];
 
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
-      { cache: 'no-store' }
+      {
+        cache: 'no-store',
+      }
     );
+
+    if (!res.ok) throw new Error("TMDB fetch failed");
+
     const data = await res.json();
     movies = data.results || [];
-  } catch (e) {
-    console.error("Failed to fetch movies", e);
-    movies = []; // fallback
+  } catch (error) {
+    console.error("⚠️ Failed to fetch movies:", error);
+    movies = []; // fallback biar build tetap lanjut
   }
 
   return (
