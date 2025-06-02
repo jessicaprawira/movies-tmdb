@@ -1,40 +1,29 @@
-export const dynamic = "force-dynamic";
+import { getWatchlistProducts } from '@/actions/watchlist';
+import MovieCard from '@/components/MovieCard';
+import MovieCardWatchlistWrapper from '@/components/MovieCardWatchlistWrapper';
 
-export default async function WatchlistPage() {
-  let watchlist = [];
+const WatchlistPage = async () => {
+    const watchlist = await getWatchlistProducts();
 
-  try {
-    const res = await fetch("https://your-backend-api.com/api/watchlist", {
-      cache: 'no-store',
-    });
-    watchlist = await res.json();
-  } catch (err) {
-    console.error("⚠️ Failed to fetch watchlist:", err);
-    watchlist = [];
-  } 
+    return (
+        <div className="container">
+            <h1 className="text-xl font-bold mb-6">Your Watchlist</h1>
+            {watchlist.length === 0 ? (
+                <p>Your watchlist is empty.</p>
+            ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
+                    {watchlist.map((movie) => (
+                        <MovieCardWatchlistWrapper
+                            movieId={movie.id}
+                            key={movie.id}
+                        >
+                            <MovieCard movie={movie} />
+                        </MovieCardWatchlistWrapper>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
 
-  return (
-    <div>
-      <h1>Watchlist</h1>
-      {watchlist.length === 0 ? (
-        <p>Tidak ada film dalam watchlist.</p>
-      ) : (
-        <ul>
-          {watchlist.map((movie: any) => (
-            <li key={movie.id}>
-              <img src={
-                  movie.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : 'https://via.placeholder.com/150x225?text=No+Image'
-                }
-                alt={movie.title}
-                width={150}
-              />
-              <p>{movie.title}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
+export default WatchlistPage;
