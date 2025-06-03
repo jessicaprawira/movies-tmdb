@@ -2,8 +2,9 @@ import { getMovies } from '@/actions/movies';
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ results: [{ id: 1, title: 'Inception' }] }),
+    json: () => Promise.resolve({
+      results: [{ id: 1, title: 'Inception' }]
+    })
   })
 ) as jest.Mock;
 
