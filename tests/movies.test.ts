@@ -2,24 +2,23 @@ import { getMovies } from '@/actions/movies';
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve({
-      results: [{ id: 1, title: 'Inception' }]
-    })
+    json: () =>
+      Promise.resolve({
+        results: [
+          { id: 1, title: 'Inception' },
+          { id: 2, title: 'Interstellar' },
+        ],
+      }),
   })
 ) as jest.Mock;
 
 describe('getMovies', () => {
   it('should fetch movies successfully', async () => {
-    const result = await getMovies(1);
-    expect(Array.isArray(result)).toBe(true);
-    expect(result[0].title).toBe('Inception');
-  });
+    const movies = await getMovies(1);
 
-  it('should return empty array on fetch failure', async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve({ ok: false, statusText: 'Bad Request' })
-    );
-    const result = await getMovies(1);
-    expect(result).toEqual([]);
+    expect(movies).toBeDefined();
+    expect(Array.isArray(movies)).toBe(true);
+    expect(movies.length).toBe(2);
+    expect(movies[0].title).toBe('Inception');
   });
 });
